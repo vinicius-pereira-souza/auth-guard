@@ -113,8 +113,13 @@ const getUserById = async (req: Request, res: Response) => {
 
 const updateUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
-  const image = req.file;
   const id = req.user._id;
+
+  let image: string;
+
+  if (req.file) {
+    image = req.file.filename;
+  }
 
   let updatedUser;
 
@@ -136,18 +141,14 @@ const updateUser = async (req: Request, res: Response) => {
 
   updatedUser!.email = email;
 
-  if (req.file) {
-    user.profileimage = image?.filename;
-  }
-
   try {
-    const newDocument = await User.findByIdAndUpdate(
-      { id: user._id },
-      updatedUser,
-      { new: true },
-    );
+    // const newDocument = await User.findByIdAndUpdate(
+    //   { id: user._id },
+    //   updatedUser,
+    //   { new: true },
+    // );
 
-    return res.status(200).json(newDocument);
+    return res.status(200).json(updatedUser);
   } catch (err) {
     console.log(err);
     return res.status(500).json({

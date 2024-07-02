@@ -1,23 +1,18 @@
 import multer from "multer";
 import path from "path";
 
-const imageStorage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let folder = "";
-
-    if (req.baseUrl.includes("users")) {
-      folder = "users";
-    }
-    cb(null, `uploads/${folder}/`);
+    cb(null, "uploads/users");
   },
-  filename: (req, file, cb) => {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-const imageUpload = multer({
-  storage: imageStorage,
-  fileFilter(req, file, cb) {
+const imageUpdate = multer({
+  storage: storage,
+  fileFilter: function (req, file, cb) {
     if (!file.originalname.match(/\.(png|jpg)$/)) {
       // upload only png and jpg format
       return cb(new Error("Por favor, envie apenas png ou jpg!"));
@@ -26,4 +21,4 @@ const imageUpload = multer({
   },
 });
 
-export { imageUpload };
+export { imageUpdate };

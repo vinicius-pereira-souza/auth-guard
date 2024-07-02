@@ -20,7 +20,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = <{ id: string } | JwtPayload>jwt.verify(token, secret);
+    const decoded = jwt.verify(token, secret) as JwtPayload;
 
     req.user = await User.findById(decoded.id).select("-password");
     return next();

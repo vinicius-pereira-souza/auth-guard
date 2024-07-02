@@ -13,18 +13,19 @@ import {
 } from "../middlewares/userValidation";
 import validation from "../middlewares/handleValidation";
 import verifyToken from "../middlewares/verifyToken";
-import { imageUpload } from "../middlewares/updateAvatarImage";
+import { imageUpdate } from "../middlewares/updateImage";
 
 export default Router()
   .post("/register", userCreateValidation(), validation, register)
   .post("/login", userLoginValidation(), validation, login)
   .get("/", verifyToken, getCurrentUser)
   .get("/:id", getUserById)
-  .patch(
-    "/",
-    verifyToken,
-    imageUpload.single("profileimage"),
-    userUpdateValidation(),
-    validation,
-    updateUser,
-  );
+  .patch("/", verifyToken, imageUpdate.single("profileimage"), updateUser);
+// .patch(
+//   "/",
+//   verifyToken,
+//   imageUpload.single("profileimage"),
+//   userUpdateValidation(),
+//   validation,
+//   updateUser,
+// );
