@@ -146,9 +146,9 @@ const updateUser = async (req: Request, res: Response) => {
   updatedUser!.email = email;
 
   try {
-    const neUser = await User.findByIdAndUpdate({ id: user._id }, updatedUser, {
+    const neUser = await User.findByIdAndUpdate(user._id, updatedUser, {
       new: true,
-    });
+    }).select("-password");
 
     return res.status(200).json(neUser);
   } catch (err) {

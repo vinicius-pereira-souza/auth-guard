@@ -20,12 +20,11 @@ export default Router()
   .post("/login", userLoginValidation(), validation, login)
   .get("/", verifyToken, getCurrentUser)
   .get("/:id", getUserById)
-  .patch("/", verifyToken, imageUpdate.single("profileimage"), updateUser);
-// .patch(
-//   "/",
-//   verifyToken,
-//   imageUpload.single("profileimage"),
-//   userUpdateValidation(),
-//   validation,
-//   updateUser,
-// );
+  .patch(
+    "/",
+    verifyToken,
+    imageUpdate.single("profileimage"),
+    userUpdateValidation(),
+    validation,
+    updateUser,
+  );
