@@ -111,17 +111,21 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+interface UpdateUser {
+  name: string;
+  email: string;
+  profileimage?: string;
+}
+
 const updateUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
   const id = req.user._id;
 
-  let image: string;
+  let updatedUser = <UpdateUser>{};
 
   if (req.file) {
-    image = req.file.filename;
+    updatedUser.profileimage = req.file.filename;
   }
-
-  let updatedUser;
 
   const user = await User.findById(id).select("-password");
 
@@ -142,13 +146,11 @@ const updateUser = async (req: Request, res: Response) => {
   updatedUser!.email = email;
 
   try {
-    // const newDocument = await User.findByIdAndUpdate(
-    //   { id: user._id },
-    //   updatedUser,
-    //   { new: true },
-    // );
+    const neUser = await User.findByIdAndUpdate({ id: user._id }, updatedUser, {
+      new: true,
+    });
 
-    return res.status(200).json(updatedUser);
+    return res.status(200).json(neUser);
   } catch (err) {
     console.log(err);
     return res.status(500).json({

@@ -25,6 +25,8 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     req.user = await User.findById(decoded.id).select("-password");
     return next();
   } catch (err) {
+    console.log(err);
+
     return res.status(500).json({ errors: ["Falha ao autenticar o token."] });
   }
 };
