@@ -119,7 +119,7 @@ interface UpdateUser {
 
 const updateUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
-  const id = req.user._id;
+  const id = req.params.id;
 
   let updatedUser = <UpdateUser>{};
 
