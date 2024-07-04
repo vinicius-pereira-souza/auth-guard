@@ -21,7 +21,7 @@ export default Router()
   .get("/", verifyToken, getCurrentUser)
   .get("/:id", getUserById)
   .patch(
-    "/",
+    "/:id",
     verifyToken,
     imageUpdate.single("profileimage"),
     userUpdateValidation(),
